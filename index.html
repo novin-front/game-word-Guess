@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/includes/css/mdb.min.css">
+    <link rel="stylesheet" href="./assets/includes/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 mt-5">
+                <div id="wrapper">
+                    <!-- start-game-wapper start tag -->
+                    <div id="start-game-wapper">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-12">
+                                <div class="box-card">
+                                    <div class="row justify-content-center">
+                                        <div class="col-12 col-md-5">
+                                            <div class="box-gift-start">
+                                                <img src="./assets/includes/image/gift-box-2.png" alt=""
+                                                    class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-12 col-md-12 px-xl-3">
+                                            <div class="gift-box-text">
+                                                <h2>عشق تمام شدنی نیست...</h2>
+                                                <p>پدرها و مادرها همیشه با لبخندشون بهترین حس دنیا رو به آدم میدن.
+                                                    <span class="game-text-blue">تا حالا به صفت‌های خوب پدر و مادر فکر
+                                                        کردی؟</span>
+                                                </p>
+                                                <p>با پیدا کردن سه صفت خوب می‌تونی علاوه بر درک اهمیت وجودی اونها تو
+                                                    زندگی؛ شانس برنده شدن در قرعه‌کشی جوایز هیجان‌انگیز فام رو هم پیدا
+                                                    کنی. پس فرصت رو از دست نده</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-12 mt-3">
+                                            <div class="row justify-content-center">
+                                                <div class="col-12 col-md-3 text-center">
+                                                    <button id="start-game" class="btn btn-start-game px-5">شروع
+                                                        بازی</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                            <div class="col-12 col-md-3 my-3">
+                                <div class="box-card">
+                                    <div class="gift-boxs">
+                                        <div class="col-12 box-img-gift">
+                                            <img src="./assets/includes/image/scanas.jpg" class="img-fluid" alt="">
+                                        </div>
+                                        <h4>چایزه اول :</h4>
+                                        <h4>۵۰ میلیون وجه نقد</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 my-3">
+                                <div class="box-card">
+                                    <div class="gift-boxs">
+                                        <div class="col-12 box-img-gift">
+                                            <img src="./assets/includes/image/mobile.jpg" class="img-fluid" alt="">
+                                        </div>
+                                        <h4>چایزه دوم :</h4>
+                                        <h4>سه عدد گوشی هوشمند</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 my-3">
+                                <div class="box-card">
+                                    <div class="gift-boxs">
+                                        <div class="col-12 box-img-gift">
+                                            <img src="./assets/includes/image/appel-watch.jpg" class="img-fluid" alt="">
+                                        </div>
+                                        <h4>چایزه سوم :</h4>
+                                        <h4>پنج عدد ساعت هوشمند</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 my-3">
+                                <div class="box-card">
+                                    <div class="gift-boxs">
+                                        <div class="col-12 box-img-gift">
+                                            <img src="./assets/includes/image/gift-card.jpg" class="img-fluid" alt="">
+                                        </div>
+                                        <h4>جایزه چهارم :</h4>
+                                        <h4>5 عدد کارت هدیه 500,0000 تومانی</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- end start-game-wapper tag -->
+                    <div id="guess-word-game">
+                        <div class="card-guess-word">
+                            <div class="row">
+                                <div class="col-12 col-md-4 my-1 text-center">
+                                    <button id="reload-btn" disabled="true" class="reload-box">
+                                        <span class="reload-icon"><img src="./assets/includes/image/reload-icon.png"
+                                                class="img-fluid" alt=""></span>
+                                        <span class="reload-title">دوباره بازی کن</span>
+                                    </button>
+                                </div>
+                                <div class="col-12 col-md-4 my-1">
+                                    <div class="rat-box">
+                                        <span class="rat-icon"><img src="./assets/includes/image/icon-time.png"
+                                                class="img-fluid" alt=""></span>
+                                        <span class="rat-title">زمان :</span>
+                                        <span id="your-time">0</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 my-1">
+                                    <div class="rat-box">
+                                        <span class="rat-icon">
+                                            <img src="./assets/includes/image/stars.png" class="img-fluid" alt="">
+                                        </span>
+                                        <span class="rat-title">امتیاز شما :</span>
+                                        <span id="your-rat">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="guess-wrapper" class="box-card">
+                            <div class="col-12 col-md-6 guide-game-box p-3">
+                                <h2>نحوه بازی:</h2>
+                                <p class="col-12 col-md-9">حالا برای <span class="game-text-blue">#3پاس</span> از
+                                    زحماتشون باید سه صفت رو توی جدول پیدا کنی که به صورت افقی، عمودی و مورب جایگذاری شده
+                                </p>
+                                <p>آماده‌ای؟ بزن بریم ...</p>
+                            </div>
+                            <div class="gmae-time-out">
+                                <h2 id="game-time-out">زمان بازی به اتمام رسید</h2>
+                            </div>
+                        </div>
+                        <div class="card-guess-word">
+                            <div class="row">
+                                <div class="col-12 col-md-9">
+                                    <div id="guess-word-content" class="row">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 text-center py-2"> <button disabled="true"
+                                        id="lottery-start" class="btn btn-start-game px-5">ثبت امتیازات</button></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- regester start tag -->
+                <div id="regester">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-12">
+                            <div class="box-card">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-8">
+                                        <div class="box-gift-end">
+                                            <img src="./assets/includes/image/game-end.png" alt="" class="img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-10">
+                                        <div class="game-end-content">
+                                            <p> تبریک میگم شما 60 امتیاز به دست آوردی. برای شرکت در <span
+                                                    class="game-text-blue">قرعه کشی ۵۰ میلیون تومانی</span> اطلاعاتت رو
+                                                وارد کن و بعد از اون اپلیکیشن فام رو نصب کن و با هر تراکنش شانست رو برای
+                                                برنده شدن افزایش بده </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row justify-content-center">
+                        <div class="col-12 mt-3">
+                            <div class="form-game">
+                                <div id="wrapper-success"></div>
+                                <div class="row">
+                                    <div class="col-12 col-md-4 my-2">
+                                        <div class="form-group" id="name-div">
+                                            <input type="text" id="fullName" class="form-control"
+                                                placeholder="نام و نام خانوادگی" />
+                                                
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 my-2">
+                                        <div class="form-group" id="phone-div">
+                                            <input type="text" id="mobile" class="form-control"
+                                                placeholder="شماره موبایل خود را وارد نمایید" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 text-center mt-1">
+                                        <button id="send-game-data" class="btn btn-start-game px-5">دریافت کد
+                                            تایید</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end regester tag -->
+            </div>
+        </div>
+    </div>
+    <div id="you-win-wrapper">
+        <div class="you-win-box col-6">
+            <div class="box-bg-you-win">
+                <h3>تبریک شما برنده شدید</h3>
+                <button class="btn btn-start-game" id="you-win-close">شرکت در قرعه کشی</button>
+            </div>
+        </div>
+    </div>
+    <script src="./assets/includes/js/jquery-3.4.1.min.js"></script>
+    <script src="./assets/includes/js/app.js"></script>
+</body>
+
+</html>
