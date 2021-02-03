@@ -230,6 +230,9 @@ h6,
 }
 
 /* --------  Custom stypes ----------- */
+.font-20{
+    font-size: 20px;
+}
 .game-start-tile {
     font-size: 1.1rem;
     margin: .5em 0;
@@ -239,6 +242,10 @@ h6,
     overflow: hidden;
 }
 .game-text-blue {
+    color: #874ff3;
+    font-weight: 600;
+}
+.game-text-blue-light{
     color: #3656ff;
     font-weight: 600;
 }
@@ -265,26 +272,41 @@ h6,
 
 .gift-box-text {
     text-align: center;
+    padding: 0 2em;
 }
 
 .gift-box-text h2 {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: .5em;
-    color: #000;
+    color: #595656;
 }
-
-#start-game-wapper {
-    padding: 6em 0;
-    display: none;
+.gift-box-text p {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: .5em;
+    line-height: 30px;
+    color: #595656;
 }
-
+.start-logo-campaign {
+    display: flex;
+    justify-content: start;
+    flex-flow: row;
+    align-items: center;
+    border: 1px solid #c0c0c0;
+    border-radius: 10px;
+    margin: 10px 0;
+    width: 70%;
+}
 .btn-start-game {
     background: #3656ff;
     color: #fff;
     font-weight: 700;
     border-radius: 10px;
     padding: 1.2em 1.6em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .gift-boxs {
     min-height: 215px;
@@ -296,7 +318,17 @@ h6,
     margin: 10px 0;
     color: #2d303a;
 }
-
+.gift-list {
+    font-size: 18px;
+    margin: 10px 0;
+    padding-right: 1em;
+}
+.gift-list li {
+    padding: 10px 0;
+}
+.gift-list .bold {
+    font-weight: bold;
+}
 .btn-start-game:disabled {
     cursor: not-allowed !important;
 }
@@ -323,10 +355,6 @@ h6,
     background-color: #ffffff;
 }
 
-#regester {
-    margin-top: 10em;
-    /* display: none; */
-}
 .box-gift-end {
     margin-top: -12em;
     padding: 0 3em;
@@ -337,11 +365,22 @@ h6,
     text-align: center;
     margin: 1em 0;
 }
-
+#start-game-wapper {
+    padding: 2em 0;
+    /* display: none; */
+}
+#start-game-wapper .box-card{
+    padding:1em 3em;
+    /* display: none; */
+}
 #guess-word-game {
     display: none;
+    margin: 0 auto;
 }
-
+#regester {
+    margin-top: 10em;
+    display: none;
+}
 .btn-start-game:hover {
     color: #f3f7ff;
 }
@@ -394,7 +433,9 @@ h6,
     align-items: center;
     background: transparent;
 }
-
+.game-guess-title h3 {
+    font-weight: 600;
+}
 .reload-icon {
     display: inline-flex;
     flex-flow: wrap;
@@ -426,7 +467,32 @@ h6,
 .reload-title {
     padding: 0 10px;
 }
-
+#your-time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.time-content {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding: 5px 9px;
+    align-items: center;
+}
+#seconds,#minutes {
+    width: 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 35px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    color: #fff;
+    border: 1px solid  rgb(106,106,108);
+    background: rgb(106,106,108);
+    background: linear-gradient(0deg, rgba(106,106,108,1) 0%, rgba(25,27,28,1) 100%);
+}
 .box-guess-word {
     width: 100%;
     background: #f3f7ff;
@@ -629,13 +695,42 @@ h6,
     }
 }
 
-@media screen and (max-width: 768px) {}
+@media screen and (max-width: 768px) {
+    .start-logo-campaign {
+        width: 100%;
+    }
+    .gift-box-text {
+        padding: 16px;
+    }
+    #start-game-wapper .box-card{
+        padding:0;
+    }
+    .row-btn-start {
+        display: flex;
+        justify-content: center;
+    }
+    .start-logo-campaign {
+        width: 90%;
+        margin: 10px auto;
+    }
+    .gift-list li span{
+        line-height: 30px;
+    }
+    .send-data {
+        display: flex;
+        justify-content: center;
+    }
+}
 
 @media only screen and (min-width : 768px) and (max-width : 1024px) {
     .box-gift-start {
         margin-top: -3em;
         padding: 0 1em;
     }
+    .gift-list li span{
+        line-height: 30px;
+    }
+    
 }
 
 @media only screen and (min-device-width : 1200px) and (max-device-width : 1300px) {}

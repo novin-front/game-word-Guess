@@ -1,7 +1,7 @@
 let characterSelectedList = [];
 let mainCharacterArray = [];
 let gameRate = 0
-let gameTime = 120;
+let gameTime = 40;
 let minutes = (gameTime > 60) && ((gameTime % 60) === 0) ? Math.floor(gameTime / 60) - 1 : Math.floor(gameTime / 60);
 let seconds = ((gameTime % 60) === 0) ? (gameTime % 60) + 60 : gameTime % 60;
 let secondString = (seconds <= 10) ? `0${minutes}` : minutes;
@@ -21,60 +21,208 @@ function convertArrayToString(array) {
 }
 
 function generateWordArray() {
+    // let allArray = [
+    //     ["عاشق", "دوست", "مشوق"],
+    //     ["صادق", "رفیق", "وفا"],
+    //     ["یار", "حامی", "امین"],["صاد
+    //     ["ناجی", "صادق", "همدل"],
+    // ];["ناجی", "صادق", "همدل"]
+    let WordPatern = [
+        {
+            wordArray:["عاشق", "دوست", "مشوق"],
+            wordText:`<div class="guess-content col-12 col-md-6">
+            <div class="row justify-content-center">
+                <button class="guess-char">م</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">ت</button>
+                <button class="guess-char">ع</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">ش</button>
+                <button class="guess-char">س</button>
+                <button class="guess-char">ا</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">و</button>
+                <button class="guess-char">ش</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">د</button>
+                <button class="guess-char">ق</button>
+            </div>
+        </div>`
+        }
+        ,
+        {
+            wordArray:["صادق", "رفیق", "وفا"],
+            wordText:`<div class="guess-content col-12 col-md-6">
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">ر</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">و</button>
+                <button class="guess-char">ف</button>
+                <button class="guess-char">ا</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">ی</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">ق</button>
+                <button class="guess-char">د</button>
+                <button class="guess-char">ا</button>
+                <button class="guess-char">ص</button>
+            </div>
+        </div>`
+        },
+        {
+            wordArray:["یار", "حامی", "امین"],
+            wordText:`<div class="guess-content col-12 col-md-6">
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">ی</button>
+                <button class="guess-char">ح</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">ا</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">م</button>
+                <button class="guess-char">ر</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">ا</button>
+                <button class="guess-char">م</button>
+                <button class="guess-char">ی</button>
+                <button class="guess-char">ن</button>
+            </div>
+            </div>`
+        }
+        ,
+        {
+            wordArray:["ناجی", "صادق", "همدل"],
+            wordText:`<div class="guess-content col-12 col-md-6">
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">ق</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">ل</button>
+                <button class="guess-char">د</button>
+                <button class="guess-char">م</button>
+                <button class="guess-char">ه</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">ن</button>
+                <button class="guess-char">ا</button>
+                <button class="guess-char">ج</button>
+                <button class="guess-char">ی</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">ص</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+            </div>
+            </div>`
+        }
+    ]
     let allArray = [
-        // ["فداکاری", "مهربانی", "گذشت"],
-        ["عاشق", "دوست", "مشوق"],
-        ["صادق", "رفیق", "وفا"],
-        ["یار", "حامی", "امین"],
-        ["ناجی", "صادق", "همدل"],
+         [
+             {
+                 word:"مشوق",col:{start:0,end:3},row:{start:0,end:3},model:"skewedstart",operation:"-"
+             },
+             {
+                 word:"دوست",col:{start:2,end:2},row:{start:3,end:0},model:"horizontalend",operation:"-"
+             },
+             {
+                 word:"عاشق",col:{start:3,end:3},row:{start:3,end:0},model:"horizontalstart",operation:"-"
+             }
+         ],
+         [
+            {
+                word:"وفا",col:{start:2,end:0},row:{start:0,end:1},model:"verticalend",operation:"-"
+            },
+             {
+                 word:"رفیق",col:{start:0,end:3},row:{start:0,end:3},model:"skewedstart",operation:"-"
+             },
+             {
+                 word:"صادق",col:{start:0,end:3},row:{start:0,end:3},model:"verticalstart",operation:"-"
+             },
+            ],
+         [
+             {
+                 word:"امین",col:{start:0,end:3},row:{start:3,end:0},model:"verticalstart",operation:"-"
+             },
+             {
+                 word:"حامی",col:{start:2,end:2},row:{start:3,end:0},model:"horizontalstart",operation:"-"
+             },
+             {
+                word:"یار",col:{start:1,end:0},row:{start:3,end:3},model:"skewedstart",operation:"-"
+            },
+         ],
+        [{
+                word: "همدل",
+                col: {
+                    start: 0,
+                    end: 3
+                },
+                row: {
+                    start: 1,
+                    end: 1
+                },
+                model: "verticalend",
+                operation: "-"
+            },
+            {
+                word: "صادق",
+                col: {
+                    start: 2,
+                    end: 2
+                },
+                row: {
+                    start: 3,
+                    end: 0
+                },
+                model: "horizontalend",
+                operation: "-"
+            },
+            {
+                word: "ناجی",
+                col: {
+                    start: 3,
+                    end: 0
+                },
+                row: {
+                    start: 2,
+                    end: 2
+                },
+                model: "verticalstart",
+                operation: "-"
+            },
+        ]
     ];
-    let allKeyWords = [
-        [
-         {
-             word:"رفیق",col:{start:0,end:3},row:{start:0,end:3},model:"skewedstart",operation:"-"
-         },
-         {
-             word:"صادق",col:{start:0,end:3},row:{start:0,end:3},model:"verticalstart",operation:"-"
-         },
-         {
-             word:"وفا",col:{start:2,end:1},row:{start:0,end:1},model:"verticalend",operation:"-"
-         },
-        ],
-     [
-         {
-             word:"مشوق",col:{start:3,end:0},row:{start:3,end:0},model:"skewedend",operation:"-"
-         },
-         {
-             word:"دوست",col:{start:1,end:1},row:{start:3,end:0},model:"horizontalend",operation:"-"
-         },
-         {
-             word:"عاشق",col:{start:0,end:0},row:{start:3,end:0},model:"horizontalstart",operation:"-"
-         }
-     ],
-     [
-         {
-             word:"یار",col:{start:2,end:0},row:{start:0,end:2},model:"skewedend",operation:"-"
-         },
-         {
-             word:"امین",col:{start:3,end:0},row:{start:3,end:3},model:"verticalend",operation:"-"
-         },
-         {
-             word:"حامی",col:{start:1,end:1},row:{start:3,end:0},model:"horizontalstart",operation:"-"
-         }
-     ],
-     [
-         {
-             word:"همدل",col:{start:0,end:3},row:{start:1,end:1},model:"verticalstart",operation:"-"
-         },
-         {
-             word:"ناجی",col:{start:3,end:0},row:{start:2,end:2},model:"verticalend",operation:"-"
-         },
-         {
-             word:"صادق",col:{start:2,end:2},row:{start:3,end:0},model:"horizontalend",operation:"-"
-         },
-     ] 
- ];
-    let arrayLength = allArray.length;
+    let arrayLength = WordPatern.length;
     let randomNumber = generatRandomNumber(arrayLength);
     let oldRandomeNumber = sessionStorage.getItem("generateWordArray");
 
@@ -99,7 +247,7 @@ function generateWordArray() {
             sessionStorage.setItem("generateWordArray", randomNumber);
         }, 1000);
     }
-    return allArray[randomNumber]
+    return WordPatern[randomNumber];
 
 
 }
@@ -167,16 +315,11 @@ function chunkArray(myArray, chunk_size) {
 
 function CreateGameSteps() {
 
-    this.words = generateWordArray();
-    this.words.map((word, index) => {
-        CreateRandomCharacterArray(word)
-    })
-
-
-    this.steps = generateRandomCharacters(mainCharacterArray.length, mainCharacterArray);
+    this.steps = generateWordArray();
+    //  generateRandomCharacters(mainCharacterArray.length, mainCharacterArray);
     return {
-        charecterArray: this.steps,
-        wordsArray: words
+        charecterArray: this.steps.wordText,
+        wordsArray: this.steps.wordArray
     };
 }
 
@@ -186,6 +329,7 @@ function createGuessCharacter(char) {
 }
 
 function createRowItems(charArray) {
+    // console.log("createRowItems ==>",charArray)
     let rowChar = `<div class="row justify-content-center">`;
     charArray.forEach((item) => {
         rowChar += createGuessCharacter(item);
@@ -197,10 +341,12 @@ function createRowItems(charArray) {
 function createRowStepUI(rows, key) {
     let rowTag = "";
 
+    let charArray = generateRandomCharactersByWord(rows);
 
+    console.log("createRowStepUI =>", charArray)
 
-    let ArrayRow = chunkArray(rows, 4);
-    ArrayRow.forEach((item) => {
+    charArray.forEach((item) => {
+        console.log("createRowStepUI &&&&&=>", item)
         rowTag += createRowItems(item);
     });
 
@@ -218,14 +364,8 @@ function createUIGuessWord(gameObj) {
         charecterArray,
         wordsArray
     } = gameObj;
-    let content = createRowStepUI(charecterArray);
-
-    let keyWords = ``;
-    wordsArray.map((item) => {
-        keyWords += createGuessWord(item);
-    })
-    jQuery("#guess-wrapper").append(content);
-    jQuery("#guess-word-content").append(keyWords);
+    jQuery("#guess-wrapper").append(charecterArray);
+    // jQuery("#guess-word-content").append(keyWords);
 
 }
 
@@ -234,10 +374,11 @@ function createGuessWord(word) {
         <div class="box-guess-word" id='box-guess-${generatRandomNumber(10000)}'>
             <span class="guess-text">${word}</span>
             <span class="guess-icon">
-            <img src="./assets/includes/image/dont-select-icon.png" alt="" class="img-fluid">
+            <img src='./assets/includes/image/is-had-icon.png' alt='' class='img-fluid'>
             </span>
         </div>
     </div>`;
+    //<img src="./assets/includes/image/dont-select-icon.png" alt="" class="img-fluid">
     return wordTag;
 }
 let stepsGame = CreateGameSteps();
@@ -266,7 +407,8 @@ function setRateData() {
     jQuery("#your-rat").text(gameRate)
 }
 
-function setTickForTrueWord(trueWord) {
+function setTickForTrueWord(trueWord,word) {
+    jQuery("#guess-word-content").append(createGuessWord(word))
     jQuery(".box-guess-word").each(function () {
         let parentid = "#" + (jQuery(this).attr("id"));
         let wordTag = jQuery(parentid + " .guess-text");
@@ -296,9 +438,10 @@ function getArrayWordConvertToArrays(arrayWord) {
 function checkWordIsHas(allWordArray, charSelectedArray) {
     let wordArrayJson = getArrayWordConvertToArrays(allWordArray);
     let charJson = JSON.stringify(charSelectedArray.sort());
-    wordArrayJson.map((word) => {
+    wordArrayJson.map((word,index) => {
         if (word === charJson) {
-            setTickForTrueWord(JSON.stringify(characterSelectedList.sort()));
+            console.log(index)
+            setTickForTrueWord(word,allWordArray[index]);
         }
     })
 }
@@ -315,9 +458,10 @@ let timeinterval;
 
 function updateGameTime() {
     seconds--;
-    let secondString = (seconds <= 10) ? `0${seconds}` : seconds;
-    let minutString = (minutes <= 10) ? `0${minutes}` : minutes;
-    document.getElementById("your-time").innerHTML = `${secondString} : ${minutString}`;
+    let secondString = (seconds < 10) ? `0${seconds}` : seconds;
+    let minutString = (minutes < 10) ? `0${minutes}` : minutes;
+    document.getElementById("seconds").innerHTML = `${secondString}`;
+    document.getElementById("minutes").innerHTML = `${minutString}`;
     gameTime--;
     if (gameRate === 60) {
         youWin();
@@ -366,15 +510,17 @@ function reloadGuessBox() {
     jQuery(".char-success").each(function () {
         jQuery(this).removeClass("char-success");
     });
-    jQuery(".box-guess-word").each(function () {
-        let parentid = "#" + (jQuery(this).attr("id"));
-            jQuery(parentid + " .guess-icon").empty();
-            jQuery(parentid + " .guess-icon").append(`<img src="./assets/includes/image/dont-select-icon.png" alt="" class="img-fluid">`);
-        });
+    // jQuery(".box-guess-word").each(function () {
+    //     let parentid = "#" + (jQuery(this).attr("id"));
+    //     // jQuery(parentid + " .guess-icon").empty();
+    //     // jQuery(parentid + " .guess-icon").append(`<img src="./assets/includes/image/dont-select-icon.png" alt="" class="img-fluid">`);
+    // });
     characterSelectedList = [];
-    gameRate = 0;
+    // gameRate = 0;
+    gameEnd=true;
+    jQuery("#lottery-start").removeAttr("disabled");
     jQuery("#your-rat").text(gameRate)
-    
+
 }
 
 function IsValidPhoneNumber(value) {
@@ -382,30 +528,43 @@ function IsValidPhoneNumber(value) {
         value,
     );
 };
-function IsValidFullName (value){
+
+function IsValidFullName(value) {
     return /^[a-zA-Z پچجحخهعغفقثصضشسیبلاتنمکگوئدذرزطظژؤإأءًٌٍَُِّ\s]+$/g.test(value);
 }
-function isEmpty(){
-    jQuery("input.form-control").each(function(){
+
+function isEmpty() {
+    jQuery("input.form-control").each(function () {
         let parent = jQuery(this).parent();
-        let idParent ="#" +  jQuery(parent).attr("id")
-        jQuery(idParent + " .error").each(function(){
+        let idParent = "#" + jQuery(parent).attr("id")
+        jQuery(idParent + " .error").each(function () {
             jQuery(this).remove()
         })
-        if(jQuery(this).val() == ""){
+        if (jQuery(this).val() == "") {
             jQuery(parent).append("<span class='error'>لطفا مقادیر را وارد کنید</span>")
             jQuery(this).addClass("error-input")
-        }else{
-            
+        } else {
+
             jQuery(idParent + " .error").remove()
             jQuery(this).removeClass("error-input")
         }
     })
 }
-function generateAlert(messageAlert){
+
+function generateAlert(messageAlert) {
     let allertTag = `<div class="row justify-content-center">
                         <div class="col-12 col-md-9">
                             <div class="alert alert-success text-center" id="box-success" role="alert">
+                            ${messageAlert}
+                            </div>
+                        </div>
+                    </div>`;
+    return allertTag;
+}
+function generateAlertError(messageAlert) {
+    let allertTag = `<div class="row justify-content-center">
+                        <div class="col-12 col-md-9">
+                            <div class="alert alert-danger text-center" id="box-success" role="alert">
                             ${messageAlert}
                             </div>
                         </div>
@@ -418,9 +577,9 @@ jQuery(document).ready(function () {
         let key = e.key;
         let inputValue = this.value;
         let searchRegExp = new RegExp(key, 'g');
-        
+
         if (isNumberByCodeScii(e.keyCode) && inputValue.length < 12) {
-           
+
         } else {
             this.value = this.value.replace(searchRegExp, "")
         }
@@ -428,16 +587,16 @@ jQuery(document).ready(function () {
     jQuery("#send-game-data").on("click", function (e) {
         e.preventDefault()
         isEmpty();
-        let idParentmobile ="#" +  jQuery("#mobile").parent().attr("id")
-        let idParentFullName ="#" +  jQuery("#fullName").parent().attr("id")
+        let idParentmobile = "#" + jQuery("#mobile").parent().attr("id")
+        let idParentFullName = "#" + jQuery("#fullName").parent().attr("id")
         if (jQuery("#mobile").val() != "" && jQuery("#fullName").val() != "") {
-            jQuery(idParentmobile + " .error").each(function(){
+            jQuery(idParentmobile + " .error").each(function () {
                 jQuery(this).remove()
             });
-            jQuery(idParentFullName + " .error").each(function(){
+            jQuery(idParentFullName + " .error").each(function () {
                 jQuery(this).remove()
             })
-            if(!IsValidFullName(jQuery("#fullName").val())){
+            if (!IsValidFullName(jQuery("#fullName").val())) {
                 jQuery(idParentFullName).append("<span class='error'>نام و نام خانودگی وارد شده اشتباه است</span>")
                 jQuery("#fullName").addClass("error-input");
                 return;
@@ -445,39 +604,49 @@ jQuery(document).ready(function () {
             if (IsValidPhoneNumber(jQuery("#mobile").val())) {
 
                 let data = {};
-                data.mobile=jQuery("#mobile").val();
+                data.mobile = jQuery("#mobile").val();
                 data.fullName = jQuery("#fullName").val();
                 data.gameRate = gameRate;
-                console.log("data ==>",data)
+                jQuery("#send-game-data").empty();
+                jQuery("#send-game-data").append(`<span class="mr-2">درحال دریافت ...</span>
+                                                <div class="spinner-border" role="status">
+                                                    <span class="sr-only">...</span>
+                                                </div>`);
+                jQuery("#send-game-data").attr("disabled","true");
+                console.log("data ==>", data)
+               setTimeout(() => {
                 jQuery.ajax({
                     async: false,
                     type: "POST",
-                    url: "http://localhost:1900/api/v1/guess-words/",
                     // url: "http://localhost:1900/api/v1/guess-words/",
+                    url: "https://fampayment.iran.liara.run/api/v1/guess-words/",
                     data: JSON.stringify(data),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (response) {
-                        console.log("response =>",response);
-                        // jQuery("#send-game-data").attr("disabled","true");
-                       
-                        // jQuery("#wrapper-success").empty();
-                        // jQuery("#wrapper-success").append(generateAlert(response.message));
-                       
-                       
-                        // jQuery("#wrapper-success").append(generateAlert(JSON.stringify(response.data)));
+                        console.log("response =>", response);
+                        jQuery("#send-game-data").empty();
+                        jQuery("#send-game-data").append(`دریافت کد`);
+                        jQuery("#wrapper-success").empty();
+                        jQuery("#wrapper-success").append(generateAlert(response.message));
                         
-                        // setTimeout(() => {
-                        // jQuery("#fullName").val('');
-                        // jQuery("#mobile").val('');
-                        // jQuery("#box-success").fadeOut();
-                        // }, 6000);
+                        setTimeout(() => {
+                        jQuery("#fullName").val('');
+                        jQuery("#mobile").val('');
+                        jQuery("#box-success").fadeOut();
+                        }, 6000);
                     },
                     error: function (error) {
-                        console.error("error ==> ",error);
-    
+                        console.error("error ==> ", error);
+                        jQuery("#send-game-data").removeAttr("disabled");
+                        jQuery("#send-game-data").empty();
+                        jQuery("#send-game-data").append(`دریافت کد`);
+                        jQuery("#wrapper-success").empty();
+                        jQuery("#wrapper-success").append(generateAlertError("خطایی رخ داده است"));
+
                     }
                 });
+               }, 500);
 
             } else {
                 jQuery(idParentmobile).append("<span class='error'>شماره وارد شده اشتباه است</span>")
@@ -504,6 +673,7 @@ jQuery(document).ready(function () {
     })
     jQuery("#lottery-start").on("click", function () {
         if (gameEnd) {
+            jQuery("#game-end-points").text(gameRate)
             jQuery("#guess-word-game").hide();
             jQuery("#regester").show();
         }
@@ -537,156 +707,157 @@ jQuery(document).ready(function () {
 });
 
 
-function wordNew (wordArrayObj){
-  
+function generateRandomCharactersByWord(wordArrayObj) {
+
     let allCharArray = [];
-    for(let i =0 ; i<4;i++){
+    for (let i = 0; i < 4; i++) {
         let xArray = [];
-        for(let j =0 ; j <4;j++){
+        for (let j = 0; j < 4; j++) {
             xArray.push(generateRandomChar());
         }
         allCharArray.push(xArray);
     }
-    console.log("allCharArray =>",allCharArray)
-    wordArrayObj.forEach((item )=>{
-        
+    wordArrayObj.forEach((item) => {
+
         let char = 0
-        if(item.model == "skewedstart"){
-            
+        if (item.model == "skewedstart") {
+
             let row = item.row.start;
             let col = item.col.start;
-            console.log("row",row)
-            console.log("col",col)
-            for(let i=0;i< 4;i++){
-                for(let j= 0 ; j < 4;j++){
-                    if(j == i ){
+            
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+                    if (j == i) {
                         allCharArray[i][j] = item.word.charAt(char)
                         col++;
                         char++;
                     }
                 }
-                if(i == col ){
+                if (i == col) {
                     row++;
                 }
             }
-            console.log(item)
+            
         }
-        if(item.model == "skewedend"){
+        if (item.model == "skewedend") {
             let row = item.row.start;
             let col = item.col.start;
-            
-            for(let i=0;i<4;i++){
-                for(let j= 0 ; j < 4;j++){
+
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+
+                    if (j == col) {
                     
-                    if(j == col ){
-                        console.log(`col ${col} @@ j ${j}`,j,allCharArray[i][j]);
                         allCharArray[i][j] = item.word.charAt(char)
                         col--;
                         char++;
                     }
                 }
-                if(i == row ){
+                if (i == row) {
                     row--;
                 }
             }
             console.log(item)
         }
-        if(item.model == "horizontalend"){
+        if (item.model == "horizontalend") {
             let row = item.row.start;
             let col = item.col.start;
-            console.log("row",row)
-            console.log("col",col)
-            for(let i=3;i >= 0;i--){
-                for(let j= 3 ;j >= 0;j--){
-                    
-                    if(j == col ){
-                        
+            console.log("row", row)
+            console.log("col", col)
+            for (let i = 3; i >= 0; i--) {
+                for (let j = 3; j >= 0; j--) {
+
+                    if (j == col) {
+
                         allCharArray[i][j] = item.word.charAt(char);
-                        console.log(`col ${col} @@ j ${j}`,j,allCharArray[i][j]);
+                        console.log(`col ${col} @@ j ${j}`, j, allCharArray[i][j]);
                         char++;
                     }
                 }
-                if(i == row ){
+                if (i == row) {
                     row--;
                 }
             }
             console.log(item)
         }
-        if(item.model == "horizontalstart"){
+        if (item.model == "horizontalstart") {
             let row = item.row.start;
             let col = item.col.start;
-            console.log("row",row)
-            console.log("col",col)
-            for(let i=0;i <4;i++){
-                for(let j= 0 ;j < 4;j++){
-                    
-                    if(j == col ){
-                        
+            console.log("row", row)
+            console.log("col", col)
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+
+                    if (j == col) {
+
                         allCharArray[i][j] = item.word.charAt(char);
-                        console.log(`col ${col} @@ j ${j}`,j,allCharArray[i][j]);
+                        console.log(`col ${col} @@ j ${j}`, j, allCharArray[i][j]);
                         char++;
                     }
                 }
-                if(i == row ){
+                if (i == row) {
                     row--;
                 }
             }
             console.log(item);
-        }if(item.model == "verticalstart"){
+        }
+        if (item.model == "verticalstart") {
             let row = item.row.end;
             let col = item.col.start;
-            console.log("row",row)
-            console.log("col",col)
-            for(let i=0;i <4;i++){
-                for(let j= 0 ;j < 4;j++){
-                    
-                    if(j == col && row ==i ){
-                        
+            console.log("row", row)
+            console.log("col", col)
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+
+                    if (j == col && row == i) {
+
                         allCharArray[i][j] = item.word.charAt(char);
-                        console.log(`col ${col} @@ j ${j}`,j,allCharArray[i][j]);
+                        console.log(`col ${col} @@ j ${j}`, j, allCharArray[i][j]);
                         char++;
                         col++;
                     }
                 }
-                if(i == row ){
+                if (i == row) {
                     // row++;
                 }
             }
             console.log(item)
         }
-        if(item.model == "verticalend"){
+        if (item.model == "verticalend") {
             let row = item.row.end;
             let col = item.col.start;
-            console.log("row",row)
-            console.log("col",col)
-            for(let i=3;i >=0;i--){
-                for(let j= 3 ;j >= 0;j--){
-                    
-                    if(j == col && row ==i ){
-                        
+            console.log("row", row)
+            console.log("col", col)
+            for (let i = 3; i >= 0; i--) {
+                for (let j = 3; j >= 0; j--) {
+
+                    if (j == col && row == i) {
+
                         allCharArray[i][j] = item.word.charAt(char);
-                        console.log(`col ${col} @@ j ${j}`,j,allCharArray[i][j]);
+                        console.log(`col ${col} @@ j ${j}`, j, allCharArray[i][j]);
                         char++;
                         col--;
                     }
                 }
-                if(i == row ){
+                if (i == row) {
                     // row++;
                 }
             }
             console.log(item)
         }
     })
+    return allCharArray;
 }
-function generateRandomChar (){
+
+function generateRandomChar() {
     var characters = '​آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی';
     let randomNumber = generatRandomNumber(34);
-        if (randomNumber === 0) {
-            randomNumber = randomNumber + 1;
-        }
-        if (randomNumber > 34) {
-            randomNumber = randomNumber - 2;
-        }
-        return characters.charAt(randomNumber);
+    if (randomNumber === 0) {
+        randomNumber = randomNumber + 1;
+    }
+    if (randomNumber > 34) {
+        randomNumber = randomNumber - 2;
+    }
+    return characters.charAt(randomNumber);
 }
 // wordNew();
