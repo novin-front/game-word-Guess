@@ -408,6 +408,10 @@ function setRateData() {
 }
 
 function setTickForTrueWord(trueWord,word) {
+    $(".not-is-valid").each(function(){
+        this.remove();
+    });
+    charM="";
     jQuery("#guess-word-content").append(createGuessWord(word))
     jQuery(".box-guess-word").each(function () {
         let parentid = "#" + (jQuery(this).attr("id"));
@@ -440,7 +444,6 @@ function checkWordIsHas(allWordArray, charSelectedArray) {
     let charJson = JSON.stringify(charSelectedArray.sort());
     wordArrayJson.map((word,index) => {
         if (word === charJson) {
-            console.log(index)
             setTickForTrueWord(word,allWordArray[index]);
         }
     })
@@ -452,7 +455,6 @@ function wordListEqualCharList(allWordArray, char) {
     }
 }
 let charM = "";
-
 
 let timeinterval;
 
@@ -686,16 +688,35 @@ jQuery(document).ready(function () {
     });
     jQuery(".guess-char").on("click", function () {
         let character = jQuery(this).text();
+        
         if (gameTimeChecker()) {
             let index = characterSelectedList.indexOf(character);
             // wordListEqualCharList(stepsGame.wordsArray, character);
             if (index > -1) {
+                notSetWords(charM);
                 characterSelectedList.splice(index, 1);
                 jQuery(this).removeClass("char-active");
                 checkWordIsHas(stepsGame.wordsArray, characterSelectedList)
+                let arrChar = convertStringToArray(charM);
+                console.log("arrChar after ==>",arrChar)
+                let indexMchar = arrChar.indexOf(character);
+                console.log("arrChar index of ==>",arrChar.indexOf(character))
+
+                let newCharM ="";
+                if(indexMchar > -1 ){
+                    arrChar.splice(indexMchar, 1);
+                    console.log("arrChar before ==>",arrChar)
+                    newCharM = convertArrayToString(arrChar);
+                    charM = newCharM;
+                    notSetWords(charM);
+                }
+                console.log("charM ==>",charM)
+
 
             } else {
                 charM += character;
+                console.log("charM ==>",charM)
+                notSetWords(charM);
                 characterSelectedList.push(character);
                 jQuery(this).addClass("char-active");
                 checkWordIsHas(stepsGame.wordsArray, characterSelectedList)
@@ -705,7 +726,25 @@ jQuery(document).ready(function () {
     });
 
 });
-
+function createGuessWordNotSet(word) {
+    let wordTag = ` <div class="col-12 col-md-4 py-2 not-is-valid" id='box-guess-${generatRandomNumber(10000)}'>
+        <div class="box-guess-word ">
+            <span class="guess-text">${word}</span>
+            <span class="guess-icon">
+            <img src="./assets/includes/image/dont-select-icon.png" alt="" class="img-fluid">
+            </span>
+        </div>
+    </div>`;
+    return wordTag;
+}
+function notSetWords(word){
+    $(".not-is-valid").each(function(){
+        this.remove();
+    });
+    if(word.length > 0){
+        $("#guess-word-content").append(createGuessWordNotSet(word))
+    }
+}
 
 function generateRandomCharactersByWord(wordArrayObj) {
 
