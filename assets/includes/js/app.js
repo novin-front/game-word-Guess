@@ -1,8 +1,8 @@
 let characterSelectedList = [];
 let mainCharacterArray = [];
 let gameRate = 0
-let gameTime = 40;
-let minutes = (gameTime > 60) && ((gameTime % 60) === 0) ? Math.floor(gameTime / 60) - 1 : Math.floor(gameTime / 60);
+let gameTime = 60;
+let minutes = (gameTime >= 60) && ((gameTime % 60) === 0) ? Math.floor(gameTime / 60) - 1 : Math.floor(gameTime / 60);
 let seconds = ((gameTime % 60) === 0) ? (gameTime % 60) + 60 : gameTime % 60;
 let secondString = (seconds <= 10) ? `0${minutes}` : minutes;
 let minutString = (minutes <= 10) ? `0${minutes}` : minutes;
@@ -343,10 +343,8 @@ function createRowStepUI(rows, key) {
 
     let charArray = generateRandomCharactersByWord(rows);
 
-    console.log("createRowStepUI =>", charArray)
 
     charArray.forEach((item) => {
-        console.log("createRowStepUI &&&&&=>", item)
         rowTag += createRowItems(item);
     });
 
@@ -503,7 +501,30 @@ function youWin() {
     reloadGuessBox();
 
 }
-
+const faNumberConvertToEn = (phonnumber) => {
+    let mobilearray = phonnumber.split(''); // empty string separator
+    let number_P_E = {
+        '۰' :0,
+        '۱':1,
+        '۲':2,
+        '۳':3,
+        '۴':4,
+        '۵':5,
+        '۶':6,
+        '۷':7,
+        '۸':8,
+        '۹':9
+    };
+    let EnArrayNumber = []
+     mobilearray.map((number) => {
+         if(number_P_E[number] !== undefined){
+            EnArrayNumber.push(number_P_E[number])
+         }else{
+            EnArrayNumber.push(number)
+         }
+    });
+    return convertArrayToString(EnArrayNumber)
+}
 function reloadGuessBox() {
     characterSelectedList = [];
     jQuery(".char-active").each(function () {
@@ -574,12 +595,11 @@ function generateAlertError(messageAlert) {
     return allertTag;
 }
 jQuery(document).ready(function () {
-    jQuery("#mobile").on("keyup", function (e) {
+    jQuery("#mobile").keydown(function (e) {
 
         let key = e.key;
         let inputValue = this.value;
         let searchRegExp = new RegExp(key, 'g');
-
         if (isNumberByCodeScii(e.keyCode) && inputValue.length < 12) {
 
         } else {
@@ -597,14 +617,16 @@ jQuery(document).ready(function () {
             });
             jQuery(idParentFullName + " .error").each(function () {
                 jQuery(this).remove()
-            })
+            });
+            
             if (!IsValidFullName(jQuery("#fullName").val())) {
                 jQuery(idParentFullName).append("<span class='error'>نام و نام خانودگی وارد شده اشتباه است</span>")
                 jQuery("#fullName").addClass("error-input");
                 return;
             }
+            
             if (IsValidPhoneNumber(jQuery("#mobile").val())) {
-
+                let mobileNumber = faNumberConvertToEn(jQuery("#mobile").val())
                 let data = {};
                 data.mobile = jQuery("#mobile").val();
                 data.fullName = jQuery("#fullName").val();
@@ -626,17 +648,26 @@ jQuery(document).ready(function () {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (response) {
-                        console.log("response =>", response);
-                        jQuery("#send-game-data").empty();
-                        jQuery("#send-game-data").append(`دریافت کد`);
                         jQuery("#wrapper-success").empty();
-                        jQuery("#wrapper-success").append(generateAlert(response.message));
+                        console.log("response =>", response);
+                        if(response.success){
+                            jQuery("#send-game-data").empty();
+                            jQuery("#send-game-data").append(`دریافت کد`);
+                            jQuery("#wrapper-success").append(generateAlert(response.message));
+                            setTimeout(() => {
+                                jQuery("#fullName").val('');
+                                jQuery("#mobile").val('');
+                                jQuery("#box-success").fadeOut();
+                                }, 6000);
+                        }else{
+                            jQuery("#wrapper-success").append(generateAlertError(response.message));
+                            jQuery("#send-game-data").empty();
+                            jQuery("#send-game-data").removeAttr("disabled");
+                            jQuery("#send-game-data").append(`دریافت کد`);
+                        }
                         
-                        setTimeout(() => {
-                        jQuery("#fullName").val('');
-                        jQuery("#mobile").val('');
-                        jQuery("#box-success").fadeOut();
-                        }, 6000);
+                        
+                       
                     },
                     error: function (error) {
                         console.error("error ==> ", error);
@@ -683,9 +714,15 @@ jQuery(document).ready(function () {
     jQuery("#start-game").on("click", function () {
         jQuery("#start-game-wapper").hide();
         jQuery("#guess-word-game").show();
-        timeinterval = setInterval(updateGameTime, 1000);
-        updateGameTime();
+        jQuery("body").addClass("body-overflow");
+        jQuery("#game-guide").show();
     });
+    jQuery("#accept-game-guide").on("click",function(){
+        jQuery("body").removeClass("body-overflow");
+        timeinterval = setInterval(updateGameTime, 1000);
+        jQuery("#game-guide").hide();
+        updateGameTime();
+    })
     jQuery(".guess-char").on("click", function () {
         let character = jQuery(this).text();
         
@@ -698,24 +735,20 @@ jQuery(document).ready(function () {
                 jQuery(this).removeClass("char-active");
                 checkWordIsHas(stepsGame.wordsArray, characterSelectedList)
                 let arrChar = convertStringToArray(charM);
-                console.log("arrChar after ==>",arrChar)
                 let indexMchar = arrChar.indexOf(character);
-                console.log("arrChar index of ==>",arrChar.indexOf(character))
 
                 let newCharM ="";
                 if(indexMchar > -1 ){
                     arrChar.splice(indexMchar, 1);
-                    console.log("arrChar before ==>",arrChar)
+                    
                     newCharM = convertArrayToString(arrChar);
                     charM = newCharM;
                     notSetWords(charM);
                 }
-                console.log("charM ==>",charM)
 
 
             } else {
                 charM += character;
-                console.log("charM ==>",charM)
                 notSetWords(charM);
                 characterSelectedList.push(character);
                 jQuery(this).addClass("char-active");
