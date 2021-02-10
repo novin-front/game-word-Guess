@@ -7,7 +7,9 @@ let seconds = ((gameTime % 60) === 0) ? (gameTime % 60) + 60 : gameTime % 60;
 let secondString = (seconds <= 10) ? `0${minutes}` : minutes;
 let minutString = (minutes <= 10) ? `0${minutes}` : minutes;
 let gameEnd = false;
-
+let validWordList=[];
+let mobileNumber=""
+let fullName="";
 function generatRandomNumber(end) {
     return Math.floor(Math.random() * end)
 }
@@ -409,6 +411,7 @@ function setTickForTrueWord(trueWord,word) {
     $(".not-is-valid").each(function(){
         this.remove();
     });
+    validWordList.push(word);
     charM="";
     jQuery("#guess-word-content").append(createGuessWord(word))
     jQuery(".box-guess-word").each(function () {
@@ -557,8 +560,9 @@ function IsValidFullName(value) {
 }
 
 function isEmpty() {
-    jQuery("input.form-control").each(function () {
-        let parent = jQuery(this).parent();
+    jQuery("input.form-control").each(function (index) {
+        if(index < 2){
+            let parent = jQuery(this).parent();
         let idParent = "#" + jQuery(parent).attr("id")
         jQuery(idParent + " .error").each(function () {
             jQuery(this).remove()
@@ -571,6 +575,8 @@ function isEmpty() {
             jQuery(idParent + " .error").remove()
             jQuery(this).removeClass("error-input")
         }
+        }
+        
     })
 }
 
@@ -626,8 +632,9 @@ jQuery(document).ready(function () {
             }
             
             if (IsValidPhoneNumber(jQuery("#mobile").val())) {
-                let mobileNumber = faNumberConvertToEn(jQuery("#mobile").val())
+                mobileNumber = faNumberConvertToEn(jQuery("#mobile").val())
                 let data = {};
+                fullName=jQuery("#fullName").val();
                 data.mobile = jQuery("#mobile").val();
                 data.fullName = jQuery("#fullName").val();
                 data.gameRate = gameRate;
@@ -658,7 +665,9 @@ jQuery(document).ready(function () {
                                 jQuery("#fullName").val('');
                                 jQuery("#mobile").val('');
                                 jQuery("#box-success").fadeOut();
-                                }, 6000);
+                                jQuery("#regester").hide();
+                                jQuery("#game-gratitude-box").show();
+                                }, 3000);
                         }else{
                             jQuery("#wrapper-success").append(generateAlertError(response.message));
                             jQuery("#send-game-data").empty();
@@ -679,12 +688,97 @@ jQuery(document).ready(function () {
 
                     }
                 });
-               }, 500);
+               }, 200);
 
             } else {
                 jQuery(idParentmobile).append("<span class='error'>شماره وارد شده اشتباه است</span>")
                 jQuery("#mobile").addClass("error-input");
             }
+        }
+    })
+    
+    jQuery("#send-dear-data").on("click",function(){
+        let wordList =validWordList;
+        let mobileSender=mobileNumber;
+        let dearMobile =jQuery("#dearMobile").val();
+        let idParentmobile = "#" + jQuery("#dearMobile").parent().attr("id");
+        
+        if( jQuery("#dearMobile").val() === ""){
+            if (jQuery("#dearMobile").val() == "") {
+                jQuery(idParentmobile).append("<span class='error'>لطفا مقادیر را وارد کنید</span>")
+                jQuery("#dearMobile").addClass("error-input");
+                return;
+            } else {
+    
+                jQuery(idParentmobile + " .error").remove()
+                jQuery("#dearMobile").removeClass("error-input")
+            }
+        }
+        
+        jQuery(idParentmobile + " .error").each(function () {
+            jQuery(this).remove()
+        });
+        if (IsValidPhoneNumber(jQuery("#dearMobile").val())) {
+            jQuery("#dearMobile").removeClass("error-input");
+            let dataReq={
+                wordList,
+                mobileSender,
+                dearMobile,
+                fullName,
+            };
+            console.log("dataReq =>",dataReq)
+            jQuery("#send-dear-data").empty();
+                jQuery("#send-dear-data").append(`<span class="mr-2">درحال دریافت ...</span>
+                                                <div class="spinner-border" role="status">
+                                                    <span class="sr-only">...</span>
+                                                </div>`);
+                jQuery("#send-dear-data").attr("disabled","true");
+            setTimeout(() => {
+                jQuery.ajax({
+                    async: false,
+                    type: "POST",
+                    // url: "http://localhost:1900/api/v1/guess-words/send-dear-message/",
+                    url: "https://fampayment.iran.liara.run/api/v1/guess-words/send-dear-message/",
+                    data: JSON.stringify(dataReq),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        jQuery("#wrapper-success-dear").empty();
+                        console.log("response =>", response);
+                        if(response.success){
+                            jQuery("#send-dear-data").empty();
+                            jQuery("#send-dear-data").append(`ارسال متن قدردانی`);
+                            jQuery("#wrapper-success-dear").append(generateAlert(response.message));
+                            setTimeout(() => {
+                                jQuery("#fullName").val('');
+                                jQuery("#mobile").val('');
+                                jQuery("#box-success").fadeOut();
+                                }, 6000);
+                        }else{
+                            jQuery("#wrapper-success-dear").append(generateAlertError(response.message));
+                            jQuery("#send-dear-data").empty();
+                            jQuery("#send-dear-data").removeAttr("disabled");
+                            jQuery("#send-dear-data").append(`ارسال متن قدردانی`);
+                        }
+                        
+                        
+                       
+                    },
+                    error: function (error) {
+                        console.error("error ==> ", error);
+                        jQuery("#send-dear-data").removeAttr("disabled");
+                        jQuery("#send-dear-data").empty();
+                        jQuery("#send-dear-data").append(`ارسال متن قدردانی`);
+                        jQuery("#wrapper-success-dear").empty();
+                        jQuery("#wrapper-success-dear").append(generateAlertError("خطایی رخ داده است"));
+
+                    }
+                });
+               }, 200);
+
+        }else {
+            jQuery(idParentmobile).append("<span class='error'>شماره وارد شده اشتباه است</span>")
+            jQuery("#dearMobile").addClass("error-input");
         }
     })
 
