@@ -246,7 +246,7 @@ h6,
     background-repeat: no-repeat;
     background-size: cover;
     /* background-image: linear-gradient(to bottom, #2bd1de 25%, #0c7e67); */
-    background-image:url(../image/bg-all.jpg) ;
+    background-image: url(../image/bg-all.jpg);
 }
 
 .font-20 {
@@ -465,9 +465,11 @@ h6,
     box-shadow: 0 0 0 0.25rem rgb(18 102 241 / 25%) !important;
     border: 1px solid #bdbdbd !important;
 }
+
 .bold {
     font-weight: bold;
 }
+
 .form-group .form-control~.form-label {
     font-size: .8rem;
     padding-top: .6rem;
@@ -870,19 +872,23 @@ h6,
     left: -5%;
     transform: translateY(-50%) rotate(180deg);
 }
+
 @media only screen and (min-width : 520px) and (max-width : 769px) {
     .box-gratitude {
         position: absolute;
         width: 30px;
         height: 225px;
     }
-    .right-img{
+
+    .right-img {
         right: -0%;
     }
-    .left-img{
+
+    .left-img {
         left: -0%;
     }
 }
+
 @media only screen and (min-width : 300px) and (max-width : 520px) {
 
     /* Styles */
@@ -894,29 +900,35 @@ h6,
         margin-top: -3em;
         padding: 0 2em;
     }
+
     #all-body {
         padding-top: 1em;
         padding-bottom: 2em;
     }
+
     .box-gratitude {
         width: 25px;
         height: 260px;
     }
+
     .gratitude-description {
         padding: 1em 1.5em;
         font-size: 15px;
+        text-align: justify;
     }
+
     .gratitude-title {
         font-size: 18px;
         padding: 0em 1em;
         line-height: 30px;
     }
+
     .right-img {
         top: 50%;
         right: -5%;
         transform: translateY(-50%);
     }
-    
+
     .left-img {
         top: 50%;
         left: -5%;
@@ -933,10 +945,12 @@ h6,
         margin: 0 auto;
         overflow: hidden;
     }
+
     .box-gratitude {
         width: 50px;
         height: 260px;
     }
+
     #game-gratitude-box {
         position: relative;
         top: unset;
@@ -976,14 +990,20 @@ h6,
         display: flex;
         justify-content: center;
     }
+
     .gratitude-description {
         padding: 1em 1em;
         font-size: 15px;
     }
+
     .gratitude-title {
         font-size: 20px;
         padding: 0em 1em;
         line-height: 30px;
+    }
+
+    .gift-box-text p {
+        text-align: justify;
     }
 }
 
@@ -996,15 +1016,18 @@ h6,
     .gift-list li span {
         line-height: 30px;
     }
+
     .box-gratitude {
         position: absolute;
         width: 150px;
         height: 225px;
     }
-    .right-img{
+
+    .right-img {
         right: -15%;
     }
-    .left-img{
+
+    .left-img {
         left: -15%;
     }
 
