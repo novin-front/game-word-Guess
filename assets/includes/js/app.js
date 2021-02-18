@@ -1,7 +1,7 @@
 let characterSelectedList = [];
 let mainCharacterArray = [];
 let gameRate = 0
-let gameTime = 120;
+let gameTime = 90;
 let minutes = (gameTime >= 60) && ((gameTime % 60) === 0) ? Math.floor(gameTime / 60) - 1 : Math.floor(gameTime / 60);
 let seconds = ((gameTime % 60) === 0) ? (gameTime % 60) + 60 : gameTime % 60;
 let secondString = (seconds <= 10) ? `0${minutes}` : minutes;
@@ -10,7 +10,8 @@ let gameEnd = false;
 let validWordList = [];
 let mobileNumber = ""
 let fullName = "";
-
+let stepsGame;
+let towCount=0;
 function generatRandomNumber(end) {
     return Math.floor(Math.random() * end)
 }
@@ -31,83 +32,42 @@ function generateWordArray() {
     //     ["ناجی", "صادق", "همدل"],
     // ];["ناجی", "صادق", "همدل"]
     let WordPatern = [{
-            wordArray: ["عاشق", "دوست", "مشوق"],
+            wordArray: ["همدل", "دا‌نا", "لایق"],
             wordText: `<div class="guess-content col-12 col-md-6">
+            <div class="row justify-content-center">
+                <button class="guess-char">ه</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+            </div>
             <div class="row justify-content-center">
                 <button class="guess-char">م</button>
                 <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">ت</button>
-                <button class="guess-char">ع</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
             </div>
             <div class="row justify-content-center">
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">ش</button>
-                <button class="guess-char">س</button>
-                <button class="guess-char">ا</button>
-            </div>
-            <div class="row justify-content-center">
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">و</button>
-                <button class="guess-char">ش</button>
-            </div>
-            <div class="row justify-content-center">
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">${generateRandomChar()}</button>
                 <button class="guess-char">د</button>
+                <button class="guess-char tow">ا</button>
+                <button class="guess-char">ن</button>
+                <button class="guess-char tow">ا</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">ل</button>
+                <button class="guess-char">ا‌</button>
+                <button class="guess-char">ی</button>
                 <button class="guess-char">ق</button>
             </div>
         </div>`
         },
         {
-            wordArray: ["صادق", "رفیق", "وفا"],
+            wordArray: ["صادق", "امین", "دوست"],
             wordText: `<div class="guess-content col-12 col-md-6">
             <div class="row justify-content-center">
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">ر</button>
-            </div>
-            <div class="row justify-content-center">
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">و</button>
-                <button class="guess-char">ف</button>
-                <button class="guess-char">ا</button>
-            </div>
-            <div class="row justify-content-center">
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">ی</button>
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">${generateRandomChar()}</button>
-            </div>
-            <div class="row justify-content-center">
-                <button class="guess-char">ق</button>
-                <button class="guess-char">د</button>
-                <button class="guess-char">ا</button>
                 <button class="guess-char">ص</button>
-            </div>
-        </div>`
-        },
-        {
-            wordArray: ["یار", "حامی", "امین"],
-            wordText: `<div class="guess-content col-12 col-md-6">
-            <div class="row justify-content-center">
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">ی</button>
-                <button class="guess-char">ح</button>
-                <button class="guess-char">${generateRandomChar()}</button>
-            </div>
-            <div class="row justify-content-center">
                 <button class="guess-char">${generateRandomChar()}</button>
                 <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">ا</button>
                 <button class="guess-char">${generateRandomChar()}</button>
-            </div>
-            <div class="row justify-content-center">
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">${generateRandomChar()}</button>
-                <button class="guess-char">م</button>
-                <button class="guess-char">ر</button>
             </div>
             <div class="row justify-content-center">
                 <button class="guess-char">ا</button>
@@ -115,22 +75,28 @@ function generateWordArray() {
                 <button class="guess-char">ی</button>
                 <button class="guess-char">ن</button>
             </div>
-            </div>`
-        },
-        {
-            wordArray: ["ناجی", "صادق", "همدل"],
-            wordText: `<div class="guess-content col-12 col-md-6">
             <div class="row justify-content-center">
-                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">د</button>
+                <button class="guess-char">و</button>
+                <button class="guess-char">س</button>
+                <button class="guess-char">ت</button>
+            </div>
+            <div class="row justify-content-center">
                 <button class="guess-char">ق</button>
                 <button class="guess-char">${generateRandomChar()}</button>
                 <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
             </div>
+        </div>`
+        },
+        {
+            wordArray: ["پناه", "ناجی", "همدل"],
+            wordText: `<div class="guess-content col-12 col-md-6">
             <div class="row justify-content-center">
-                <button class="guess-char">ل</button>
-                <button class="guess-char">د</button>
-                <button class="guess-char">م</button>
-                <button class="guess-char">ه</button>
+                <button class="guess-char">پ</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
             </div>
             <div class="row justify-content-center">
                 <button class="guess-char">ن</button>
@@ -139,10 +105,45 @@ function generateWordArray() {
                 <button class="guess-char">ی</button>
             </div>
             <div class="row justify-content-center">
+                <button class="guess-char">ا</button>
                 <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">ه</button>
+                <button class="guess-char">م</button>
+                <button class="guess-char">د</button>
+                <button class="guess-char">ل</button>
+            </div>
+            </div>`
+        },
+        {
+            wordArray: ["رفیق", "حامی", "صادق"],
+            wordText: `<div class="guess-content col-12 col-md-6">
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">ح</button>
                 <button class="guess-char">ص</button>
+            </div>
+            <div class="row justify-content-center">
                 <button class="guess-char">${generateRandomChar()}</button>
                 <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">ا</button>
+                <button class="guess-char">ا</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">${generateRandomChar()}</button>
+                <button class="guess-char">م</button>
+                <button class="guess-char">د</button>
+            </div>
+            <div class="row justify-content-center">
+                <button class="guess-char">ر</button>
+                <button class="guess-char">ف</button>
+                <button class="guess-char">ی</button>
+                <button class="guess-char">ق</button>
             </div>
             </div>`
         }
@@ -466,8 +467,9 @@ function createGuessWord(word) {
     //<img src="./assets/includes/image/not-valid.png" alt="" class="img-fluid">
     return wordTag;
 }
-let stepsGame = CreateGameSteps();
-createUIGuessWord(stepsGame)
+stepsGame = CreateGameSteps();
+createUIGuessWord(stepsGame);
+
 
 function isNumberByCodeScii(keyCode) {
     switch (true) {
@@ -572,7 +574,6 @@ function updateGameTime() {
     if (gameTime <= 0) {
         gameTimeChecker();
         clearInterval(timeinterval);
-        jQuery("#reload-btn").removeAttr("disabled");
         reloadGuessBox()
     } else {
         if (seconds === 0) {
@@ -587,7 +588,14 @@ function gameTimeChecker() {
         return true;
     }
     jQuery("#guess-wrapper").addClass("guess-word-time-out");
-    jQuery(".gmae-time-out").show();
+    jQuery("#guess-word-content").empty();
+    jQuery("#box-game-time-start-lottery").show();
+    jQuery("#box-start-lottery").hide();
+    jQuery("#time-poin-wrapper").hide();
+    jQuery(".game-time-out").show();
+    jQuery("#game-text-wrapper").hide();
+    $("#point-game").text(gameRate)
+    jQuery(".guess-content").remove()
     return false;
 
 }
@@ -597,8 +605,7 @@ function youWin() {
     clearInterval(timeinterval);
     // jQuery("#you-win-wrapper").show();
     jQuery("#guess-wrapper").addClass("guess-word-time-out");
-    jQuery(".gmae-time-out").show();
-    jQuery("#game-time-out").text("شما برنده شدید");
+    jQuery("#wrpper-you-win").show();
     gameEnd = true;
     jQuery("#lottery-start").removeAttr("disabled");
     reloadGuessBox();
@@ -630,7 +637,7 @@ const faNumberConvertToEn = (phonnumber) => {
 }
 
 function reloadGuessBox() {
-    characterSelectedList = [];
+    charM="";
     jQuery(".char-active").each(function () {
         jQuery(this).removeClass("char-active");
     });
@@ -644,8 +651,8 @@ function reloadGuessBox() {
     // });
     characterSelectedList = [];
     // gameRate = 0;
-    gameEnd = true;
-    jQuery("#lottery-start").removeAttr("disabled");
+    // gameEnd = true;
+    // jQuery("#lottery-start").removeAttr("disabled");
     jQuery("#your-rat").text(gameRate)
 
 }
@@ -746,7 +753,6 @@ jQuery(document).ready(function () {
                                                     <span class="sr-only">...</span>
                                                 </div>`);
                 jQuery("#send-game-data").attr("disabled", "true");
-                console.log("data ==>", data)
                 setTimeout(() => {
                     jQuery.ajax({
                         async: false,
@@ -758,7 +764,6 @@ jQuery(document).ready(function () {
                         dataType: "json",
                         success: function (response) {
                             jQuery("#wrapper-success").empty();
-                            console.log("response =>", response);
                             if (response.success) {
                                 jQuery("#send-game-data").empty();
                                 jQuery("#send-game-data").append(`دریافت کد`);
@@ -781,7 +786,6 @@ jQuery(document).ready(function () {
 
                         },
                         error: function (error) {
-                            console.error("error ==> ", error);
                             jQuery("#send-game-data").removeAttr("disabled");
                             jQuery("#send-game-data").empty();
                             jQuery("#send-game-data").append(`دریافت کد`);
@@ -828,7 +832,6 @@ jQuery(document).ready(function () {
                 dearMobile,
                 fullName,
             };
-            console.log("dataReq =>", dataReq)
             jQuery("#send-dear-data").empty();
             jQuery("#send-dear-data").append(`<span class="mr-2">درحال دریافت ...</span>
                                                 <div class="spinner-border" role="status">
@@ -846,7 +849,6 @@ jQuery(document).ready(function () {
                     dataType: "json",
                     success: function (response) {
                         jQuery("#wrapper-success-dear").empty();
-                        console.log("response =>", response);
                         if (response.success) {
                             jQuery("#send-dear-data").empty();
                             jQuery("#send-dear-data").append(`ارسال متن قدردانی`);
@@ -886,14 +888,21 @@ jQuery(document).ready(function () {
 
     jQuery("#reload-btn").on("click", function () {
         jQuery("#guess-wrapper").removeClass("guess-word-time-out");
-        jQuery(".gmae-time-out").hide();
-        gameTime = 60;
-        minutes = (gameTime > 60) && ((gameTime % 60) === 0) ? Math.floor(gameTime / 60) - 1 : Math.floor(gameTime / 60);
+        jQuery(".game-time-out").hide();
+        jQuery("#game-text-wrapper").show();
+        gameTime = 90;
+        gameRate=0;
+        minutes = (gameTime >= 60) && ((gameTime % 60) === 0) ? Math.floor(gameTime / 60) - 1 : Math.floor(gameTime / 60);
         seconds = ((gameTime % 60) === 0) ? (gameTime % 60) + 60 : gameTime % 60;
         setTimeout(timeinterval = setInterval(updateGameTime, 1000), 250);
-        jQuery(this).attr("disabled", true);
+        jQuery("#point-game").text(gameRate);
         reloadGuessBox();
-        // location.reload();
+        jQuery("#box-game-time-start-lottery").hide();
+        jQuery("#box-start-lottery").show();
+        jQuery("#time-poin-wrapper").show();
+        $(".guess-content").remove();
+        stepsGame = CreateGameSteps();
+        createUIGuessWord(stepsGame)
     })
     // jQuery("#you-win-close").on("click", function () {
     //     jQuery("#you-win-wrapper").hide();
@@ -907,6 +916,11 @@ jQuery(document).ready(function () {
             jQuery("#regester").show();
         }
     })
+    jQuery("#lottery-time-out").on("click", function () {
+            jQuery("#game-end-points").text(gameRate)
+            jQuery("#guess-word-game").hide();
+            jQuery("#regester").show();
+    })
     jQuery("#start-game").on("click", function () {
         jQuery("#start-game-wapper").hide();
         jQuery("#guess-word-game").show();
@@ -919,17 +933,28 @@ jQuery(document).ready(function () {
         jQuery("#game-guide").hide();
         updateGameTime();
     })
-    jQuery(".guess-char").on("click", function () {
+    jQuery("body").delegate(".guess-char","click", function () {
         let character = jQuery(this).text();
-
+        
         if (gameTimeChecker()) {
             let index = characterSelectedList.indexOf(character);
             // wordListEqualCharList(stepsGame.wordsArray, character);
-            if (index > -1) {
-
+            if (index > -1 ) {
                 notSetWords(charM);
-                characterSelectedList.splice(index, 1);
-                jQuery(this).removeClass("char-active");
+                let tow= jQuery(this).hasClass("tow");
+                
+                if(tow){
+                    characterSelectedList.push(character);
+                    jQuery(this).addClass("char-active");
+                    towCount=towCount+1;
+                }else{
+                    characterSelectedList.splice(index, 1);
+                    if(towCount > 1){
+                        jQuery(this).removeClass("char-active");
+                    }
+                    
+                    
+                }
                 checkWordIsHas(stepsGame.wordsArray, characterSelectedList)
                 let arrChar = convertStringToArray(charM);
                 let indexMchar = arrChar.indexOf(character);

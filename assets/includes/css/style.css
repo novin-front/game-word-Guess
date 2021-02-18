@@ -344,7 +344,21 @@ h6,
     justify-content: center;
     align-items: center;
 }
-
+.btn-start-game-border{
+    background:transparent;
+    color: #3656ff;
+    border: 1px solid #3656ff;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 1.2em 1.6em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-start-game-border:hover{
+    background:#3656ff;
+    color: #fff;
+}
 .gift-boxs {
     min-height: 215px;
 }
@@ -501,6 +515,8 @@ h6,
 
 .game-guess-title h3 {
     font-weight: 600;
+    color:#000;
+    margin-bottom: .8em;
 }
 
 .reload-icon {
@@ -573,6 +589,7 @@ h6,
     padding: 12px 0;
     border-radius: 10px;
     color: #000;
+    border:1px solid #b7c2ff;
 }
 
 .guess-icon {
@@ -680,7 +697,7 @@ h6,
     content: "";
     width: 100%;
     height: 100%;
-    background: #000000bd;
+    background: transparent;
     position: absolute;
     top: 0;
     right: 0;
@@ -689,23 +706,80 @@ h6,
     z-index: 10;
 }
 
-.gmae-time-out {
+.game-time-out {
     display: none;
     width: 100%;
-    position: absolute;
     top: 50%;
     right: -50%;
     left: -50%;
-    transform: translate(-50%, -50%);
     z-index: 11;
+    padding: 3em 2em;
 }
 
-.gmae-time-out h2 {
-    font-size: 1.6rem;
-    color: #fff;
+.game-time-out-title {
+    font-size: 1.2rem;
+    color: #000;
     text-align: center;
+    padding: 15px 0;
 }
-
+.game-time-out-box-points {
+    text-align: center;
+    color: #3656ff;
+    font-size: 1rem;
+    padding: 10px 0;
+    font-weight: bold;
+}
+.game-time-out-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.game-time-out-btn .btn {
+   margin: 10px;
+}
+.game-time-out-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#wrpper-you-win {
+    display:none;
+    background: rgba(0,0,0,.7);
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 9999;
+}
+.row-you-win {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.row-you-win {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.row-you-win h3{
+    color: #fff;
+    font-size: 1.3rem;
+}
+#box-send-start-lottery {
+    display: block;
+    position: fixed;
+    z-index: 10;
+}
+#box-game-time-start-lottery{
+    display: none;
+}
+#box-game-time-start-lottery p {
+    text-align: center;
+    font-size: 1.1rem;
+}
 #game-guide {
     display: none;
     width: 100%;
@@ -1004,6 +1078,13 @@ h6,
 
     .gift-box-text p {
         text-align: justify;
+    }
+    .game-time-out-btn{
+        flex-flow: column;
+    }
+    .game-guess-title h3 {
+        text-align: center;
+        padding-top:1em;
     }
 }
 

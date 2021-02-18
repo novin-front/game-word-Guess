@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-12 col-md-5">
-                                            <p class="game-text-blue-light text-center py-3 font-20">کمپین #قدردانم</p>
+                                            <p class="game-text-blue-light text-center py-3 font-20">#قدردانم</p>
                                         </div>
                                     </div>
                                     <div class="row justify-content-center">
@@ -150,7 +150,7 @@
                     </div>
                     <!-- end start-game-wapper tag -->
                     <div id="guess-word-game" class="col-12 col-md-10">
-                        <div class="card-guess-word">
+                        <div id="time-poin-wrapper" class="card-guess-word">
                             <div class="row align-items-center">
                                 <!-- <div class="col-12 col-md-4 my-1 text-center">
                                     <button id="reload-btn" disabled="true" class="reload-box">
@@ -169,11 +169,11 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 my-1 text-center">
-                                    <div class="game-guess-title">
+                                    <!-- <div class="game-guess-title">
                                         <h3>
                                             سه صفت رو پیدا کن !
                                         </h3>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="col-12 col-md-4 my-1">
                                     <div class="rat-box">
@@ -193,12 +193,52 @@
                             </div>
                         </div>
                         <div id="guess-wrapper" class="box-card">
-                            <div class="gmae-time-out">
-                                <h2 id="game-time-out">زمان بازی به اتمام رسید</h2>
+                            
+                            <div class="game-time-out">
+                                <div class="game-time-out-img">
+                                    <img src="./assets/includes/image/all-start.png" class="img-fluid" alt="">
+                                </div>
+                                <h3 class="game-time-out-title">زمان بازی به اتمام رسید</h3>
+                                <div class="game-time-out-box-points">
+                                    شما
+                                    <span id="point-game"></span>
+                                    امتیاز از 60 امتیاز دریافت کردید
+                                </div>
+                                <div class="game-time-out-btn">
+                                    <button id="reload-btn" class="btn btn-start-game-border px-5">
+                                        دوباره بازی کن
+                                    </button>
+                                    <button id="lottery-time-out" class="btn btn-start-game px-5">
+                                        <span class="mr-2">ثبت امتیازات</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="wrpper-you-win">
+                                <div class="row-you-win">
+                                    <h3>
+                                        تبریک شما برنده شدید
+                                    </h3>
+                                </div>
+                            </div>
+                            <div id="game-text-wrapper" class="col-12 col-md-6">
+                                <div class="game-guess-title">
+                                    <h3>
+                                        سه صفت رو پیدا کن !
+                                    </h3>
+                                </div>
+                                <p>
+                                    سه صفت درست را با کلیک بر روی حروف از راست به چپ یا از بالا به پایین پیدا کنید. با هر صفتی که به رنگ سبز در می آید، 20 امتیاز دریافت می کنید 
+می توانید تا پیدا کردن تمامی صفات مجددا بازی کنید
+                                </p>
                             </div>
                         </div>
                         <div class="card-guess-word">
-                            <div class="row">
+                            <div id="box-game-time-start-lottery" class="row">
+                                <p>
+                                    سه صفت درست را با کلیک بر روی حروف از راست به چپ یا از بالا به پایین پیدا کنید. با هر صفتی که به رنگ سبز در می آید، 20 امتیاز دریافت می کنید. می توانید تا پیدا کردن تمامی صفات مجددا بازی کنید
+                                </p>
+                            </div>
+                            <div id="box-start-lottery" class="row">
                                 <div class="col-12 col-md-9">
                                     <div id="guess-word-content" class="row">
                                     </div>
@@ -230,11 +270,13 @@
                                 <div class="row justify-content-center">
                                     <div class="col-12 col-md-10">
                                         <div class="game-end-content">
-                                            <p> تبریک میگم شما <span id="game-end-points">0</span> امتیاز به دست آوردی.
-                                                برای شرکت در <span class="game-text-blue">قرعه کشی ۵۰ میلیون
-                                                    تومانی</span> اطلاعاتت رو
-                                                وارد کن و بعد از اون اپلیکیشن فام رو نصب کن و با هر تراکنش شانست رو برای
-                                                برنده شدن افزایش بده </p>
+                                            <p>
+                                                برای شرکت در 
+                                                <span class="game-text-blue">
+                                                قرعه کشی ۵۰ میلیون تومانی 
+                                                </span>
+                                                و جوایز ارزنده دیگر اطلاعاتت رو وارد کن و بعد از اون اپلیکیشن فام رو نصب کن و با هر تراکنش شانست رو برای برنده شدن افزایش بده 
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -290,9 +332,9 @@
                             </div>
                             <h3>دستورالعمل بازی</h3>
                             <div class="col-12 col-md-10">
-                                <p>با پیدا کردن سه صفت عمودی، افقی و مورب در جدول در مدت زمان
-                                    یک دقیقه، برنده خوش شانس <span class="bold">جایزه 50 میلیون تومانی</span> ما باشید
-                                </p>
+                               <p>
+                                دنبال پیدا کردن صفات چهار حرفی در محورهای افقی و عمودی (از راست به چپ و از بالا به پایین) در مدت زمان 90 ثانیه باشید. با پیدا کردن هر صفت درست، 20 امتیاز میگیرید
+                               </p>
                             </div>
                             <button class="btn btn-start-game my-3" id="accept-game-guide">متوجه شدم</button>
                         </div>
