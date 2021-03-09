@@ -745,7 +745,7 @@ h6,
 #wrpper-you-win {
     display:none;
     background: rgba(0,0,0,.7);
-    position: fixed;
+    position: absolute;
     right: 0;
     left: 0;
     top: 0;
@@ -946,7 +946,12 @@ h6,
     left: -5%;
     transform: translateY(-50%) rotate(180deg);
 }
-
+.not-valid-words {
+    cursor: pointer;
+}
+.not-valid-words:hover {
+    opacity: .7;
+}
 @media only screen and (min-width : 520px) and (max-width : 769px) {
     .box-gratitude {
         position: absolute;
